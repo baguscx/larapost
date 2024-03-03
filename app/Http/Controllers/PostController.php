@@ -20,7 +20,7 @@ class PostController extends Controller
         // // ];
 
         // Eloquent
-        $posts = Post::active()->descending()->withTrashed()->get();
+        $posts = Post::active()->descending()->get();
         // // $view_data = [
         // //     'posts' => $posts
         // // ];
@@ -53,11 +53,9 @@ class PostController extends Controller
         // ]);
 
         //Eloquent
-        Post::insert([
+        Post::create([
             'title' => $title,
             'content' => $content,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return redirect('posts');
@@ -72,7 +70,11 @@ class PostController extends Controller
         // $post = DB::table('posts')->where('id', $id)->first();
         // eloquent
         $post = Post::where('id', $id)->first();
-        return view('posts.show', ['post' => $post]);
+        
+        $comments = $post->comments()->get(); 
+        $total_comments = $post->comments()->count();
+
+        return view('posts.show', ['post' => $post, 'comments' => $comments, 'total_comments' => $total_comments]);
     }
     
     /**
