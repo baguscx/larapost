@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
 
-        $posts = DB::table('posts')->where('active', true)->get();
+        $posts = DB::table('posts')->where('active', true)->orderBy('created_at', 'desc')->get();
         // $view_data = [
         //     'posts' => $posts
         // ];
