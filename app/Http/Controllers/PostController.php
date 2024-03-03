@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -12,11 +13,18 @@ class PostController extends Controller
      */
     public function index()
     {
+        // Query Builder
+        // $posts = DB::table('posts')->where('active', true)->orderBy('created_at', 'desc')->get();
+        // // $view_data = [
+        // //     'posts' => $posts
+        // // ];
 
-        $posts = DB::table('posts')->where('active', true)->orderBy('created_at', 'desc')->get();
-        // $view_data = [
-        //     'posts' => $posts
-        // ];
+        // Eloquent
+        $posts = Post::active()->descending()->withTrashed()->get();
+        // // $view_data = [
+        // //     'posts' => $posts
+        // // ];
+
         return view('posts.index', ['posts' => $posts]);
     }
     
@@ -36,7 +44,16 @@ class PostController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
-        DB::table('posts')->insert([
+        //Query Builder
+        // DB::table('posts')->insert([
+        //     'title' => $title,
+        //     'content' => $content,
+        //     'created_at' => date('Y-m-d H:i:s'),
+        //     'updated_at' => date('Y-m-d H:i:s')
+        // ]);
+
+        //Eloquent
+        Post::insert([
             'title' => $title,
             'content' => $content,
             'created_at' => date('Y-m-d H:i:s'),
@@ -51,7 +68,10 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = DB::table('posts')->where('id', $id)->first();
+        //query builder
+        // $post = DB::table('posts')->where('id', $id)->first();
+        // eloquent
+        $post = Post::where('id', $id)->first();
         return view('posts.show', ['post' => $post]);
     }
     
@@ -60,7 +80,10 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $post = DB::table('posts')->select('id', 'title', 'content', 'created_at', 'updated_at')->where('id', $id)->first();
+        //query builder
+        // $post = DB::table('posts')->select('id', 'title', 'content', 'created_at', 'updated_at')->where('id', $id)->first();
+        //eloquent
+        $post = Post::select('id', 'title', 'content', 'created_at', 'updated_at')->where('id', $id)->first();
         return view('posts.edit', ['post' => $post]);
     }
 
@@ -72,7 +95,15 @@ class PostController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
-        DB::table('posts')->where('id', $id)->update([
+        // Query Builder
+        // DB::table('posts')->where('id', $id)->update([
+        //     'title' => $title,
+        //     'content' => $content,
+        //     'updated_at' => date('Y-m-d H:i:s')
+        // ]);
+
+        // Eloquent
+        Post::where('id', $id)->update([
             'title' => $title,
             'content' => $content,
             'updated_at' => date('Y-m-d H:i:s')
@@ -86,7 +117,10 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('posts')->where('id', $id)->delete();
+        // Query Builder
+        // DB::table('posts')->where('id', $id)->delete();
+        // Eloquent
+        Post::where('id', $id)->delete();
         return redirect('posts');
     }
 }
