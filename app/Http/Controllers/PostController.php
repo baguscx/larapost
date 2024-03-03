@@ -69,7 +69,7 @@ class PostController extends Controller
         //query builder
         // $post = DB::table('posts')->where('id', $id)->first();
         // eloquent
-        $post = Post::where('id', $id)->first();
+        $post = Post::where('slug', $id)->first();
         
         $comments = $post->comments()->get(); 
         $total_comments = $post->comments()->count();

@@ -24,7 +24,7 @@
                     {{ $post->content }}
                 </div>
                 <div class="card-text mt-3">
-                    <a href="{{ url('posts/'.$post->id) }}" class="btn btn-primary">Details</a>
+                    <a href="{{ url('posts/'.$post->slug) }}" class="btn btn-primary">Details</a>
                     <a href="{{url('posts/'.$post->id.'/edit')}}" class="btn btn-warning">Edit</a>
                 </div>
             </div>
