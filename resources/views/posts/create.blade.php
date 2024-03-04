@@ -3,6 +3,15 @@
 @section('content')    
         <a href="{{url('posts')}}" class="my-3 btn btn-success">⬅️Back</a>
         <h3>Add New Post</h3>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form class="form-control" action="{{url('posts')}}" method="post">
             @csrf
             <div class="form-group my-2">

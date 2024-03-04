@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BlogPosted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
@@ -65,10 +66,11 @@ class PostController extends Controller
         // ]);
 
         //Eloquent
-        Post::create([
+        $post = Post::create([
             'title' => $title,
             'content' => $content,
         ]);
+        \Mail::to(Auth::user()->email)->send(new BlogPosted($post));
 
         return redirect('posts');
     }
