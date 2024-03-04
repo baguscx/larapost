@@ -20,7 +20,12 @@
             </ul>
 
             <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">Login</button>
+                @if(Auth::check())
+                <a href="/logout" type="button" class="btn btn-outline-light me-2">Logout</a>
+                @else
+                <a href="/login" type="button" class="btn btn-outline-light me-2">Login</a>
+                <a href="/register" type="button" class="btn btn-outline-light me-2">register</a>
+                @endif
             </div>
         </div>
         </div>

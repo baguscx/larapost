@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -19,12 +20,15 @@ class PostController extends Controller
         // //     'posts' => $posts
         // // ];
 
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         // Eloquent
         $posts = Post::active()->descending()->get();
         // // $view_data = [
         // //     'posts' => $posts
         // // ];
-
         return view('posts.index', ['posts' => $posts]);
     }
     
@@ -33,6 +37,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         return view('posts.create');
     }
 
@@ -41,6 +49,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         $title = $request->input('title');
         $content = $request->input('content');
 
@@ -66,6 +78,10 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         //query builder
         // $post = DB::table('posts')->where('id', $id)->first();
         // eloquent
@@ -82,6 +98,10 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         //query builder
         // $post = DB::table('posts')->select('id', 'title', 'content', 'created_at', 'updated_at')->where('id', $id)->first();
         //eloquent
@@ -94,6 +114,10 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         $title = $request->input('title');
         $content = $request->input('content');
 
@@ -119,6 +143,10 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        //Kalo user tdk login, ngapain?
+        if(!Auth::check()){
+            return redirect('login');
+        }
         // Query Builder
         // DB::table('posts')->where('id', $id)->delete();
         // Eloquent
