@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BlogPosted;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Models\Post;
@@ -51,7 +52,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         //Kalo user tdk login, ngapain?
         if(!Auth::check()){
